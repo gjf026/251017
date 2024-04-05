@@ -1,6 +1,8 @@
 package com.github.tvbox.osc.base;
 
 import android.app.Activity;
+import android.util.Log;
+
 import androidx.multidex.MultiDexApplication;
 import com.github.catvod.crawler.JsLoader;
 import com.github.tvbox.osc.bean.VodInfo;
@@ -20,6 +22,9 @@ import com.kingja.loadsir.core.LoadSir;
 import com.orhanobut.hawk.Hawk;
 import com.p2p.P2PClass;
 import com.whl.quickjs.android.QuickJSLoader;
+
+import java.io.File;
+
 import me.jessyan.autosize.AutoSizeConfig;
 import me.jessyan.autosize.unit.Subunits;
 
@@ -29,6 +34,8 @@ import me.jessyan.autosize.unit.Subunits;
  * @description:
  */
 public class App extends MultiDexApplication {
+
+    public static final String TAG = "App";
     private static App instance;
 
     private static P2PClass p;
@@ -39,6 +46,9 @@ public class App extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        File dexOutputDir = getCodeCacheDir();
+        boolean readOnly = dexOutputDir.setReadOnly();
+        Log.d(TAG, "onCreate: " + readOnly);
         initParams();
         // OKGo
         OkGoHelper.init(); //台标获取

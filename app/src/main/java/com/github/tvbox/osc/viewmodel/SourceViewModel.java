@@ -3,6 +3,8 @@ package com.github.tvbox.osc.viewmodel;
 import android.text.TextUtils;
 
 import android.util.Base64;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -67,6 +69,9 @@ import java.util.concurrent.TimeoutException;
  * @description:
  */
 public class SourceViewModel extends ViewModel {
+
+    public static final String TAG = SourceViewModel.class.getSimpleName();
+
     public MutableLiveData<AbsSortXml> sortResult;
     public MutableLiveData<AbsXml> listResult;
     public MutableLiveData<AbsXml> searchResult;
@@ -303,6 +308,10 @@ public class SourceViewModel extends ViewModel {
     }
     // categoryContent
     public void getList(MovieSort.SortData sortData, int page, String sourceKey) {
+        if (sortData == null) {
+            Log.e(TAG, "getList: sortData is null");
+            return;
+        }
         SourceBean homeSourceBean = TextUtils.isEmpty(sourceKey) ? ApiConfig.get().getHomeSourceBean(): ApiConfig.get().getSource(sourceKey);
         int type = homeSourceBean.getType();
         if (type == 3) {
