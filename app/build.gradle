@@ -30,6 +30,7 @@ android {
             ndk {
                 abiFilters 'armeabi-v7a'
             }
+            multiDexEnabled true
         }
         release {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -38,6 +39,14 @@ android {
             ndk {
                 abiFilters 'armeabi-v7a'
             }
+        }
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('tvbox.jks')
+            storePassword '123456'
+            keyAlias 'tvbox'
         }
     }
 
@@ -56,6 +65,7 @@ android {
         additionalParameters += '--set-max-idx-number=48000'
         additionalParameters += '--minimal-main-dex'
     }
+    namespace 'com.github.tvbox.osc'
 }
 
 dependencies {
